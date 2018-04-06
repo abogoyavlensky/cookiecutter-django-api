@@ -17,6 +17,7 @@ Django API boilerplate
 - Checking lint, types and complexity with auto formatting
 - Built-in API doc and `JWT`-auth by default
 - Ability to generate actual db graph
+- `django-debug-toolbar` and `django-silk` configured
 
 ## Installation
 
