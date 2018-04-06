@@ -1,0 +1,44 @@
+types:
+  - build
+  - test
+
+variables:
+  DOCKER_USER: gitlab-ci-token
+  DOCKER_PASS: "$CI_JOB_TOKEN"
+  DOCKER_TEST_IMAGE: "registry.gitlab.com/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/app/test"
+
+build:test:
+  image: docker:latest
+  stage: build
+  script:
+    - apk update && apk add --no-cache make git
+    - if git diff HEAD^..HEAD --exit-code -- Pipfile.lock; then echo "Deps have not been chaged"; else make push; fi;
+  services:
+    - docker:dind
+  variables:
+    DOCKER_ENTRYPOINT: "entrypoint-ci.sh"
+  tags:
+    - docker
+
+test:unit:
+  image: $DOCKER_TEST_IMAGE:latest
+  stage: test
+  services:
+    - postgres:10.2-alpine
+  script:
+    - printf '\e[93m%s\e[0m\n' 'Run python test'
+    - PYTHONPATH=src/apps py.test
+  variables:
+    DJANGO_SETTINGS_MODULE: config.settings.test
+    DATABASE_URL: postgres://postgres:postgres@postgres:5432/app
+  tags:
+    - docker
+
+test:lint:
+  image: $DOCKER_TEST_IMAGE:latest
+  stage: test
+  script:
+    - printf '\e[93m%s\e[0m\n' 'Run python linter'
+    - make check
+  tags:
+    - docker

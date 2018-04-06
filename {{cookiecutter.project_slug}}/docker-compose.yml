@@ -1,0 +1,52 @@
+version: '3'
+
+volumes:
+  postgres_data: {}
+  media_data: {}
+
+services:
+  postgres:
+    image: postgres:10.2-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: app
+
+  redis:
+    image: redis:alpine
+
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+
+  app: &app
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    links:
+      - postgres
+      - redis
+    volumes:
+      - .:/app
+      - media_data:/media
+    environment:
+      DJANGO_DEBUG: "True"
+      DATABASE_URL: postgres://postgres:@postgres:5432/app
+      CELERY_BROKER_URL: redis://redis:6379
+      REDIS_URL: redis://redis:6379
+      DJANGO_SHOW_API_DOCS: "True"
+    ports:
+      - "8000:80"
+    command: /start-dev.sh
+
+  celery:
+    <<: *app
+    command: /start-celeryall.sh
+    links:
+      - redis
+      - postgres
+    ports:
+      - 5555:5555

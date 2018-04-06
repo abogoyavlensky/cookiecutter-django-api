@@ -1,0 +1,61 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[dev-packages]
+
+pytest = "*"
+pytest-cov = "*"
+coverage = "*"
+django-coverage-plugin = "*"
+pytest-django = "*"
+pytest-mock = "*"
+pytest-xdist = "*"
+pytest-watch = "*"
+pytest-pythonpath = "*"
+django-dynamic-fixture = "*"
+isort = "*"
+"flake8-builtins" = "*"
+"flake8" = "*"
+pyflakes = "*"
+pylint = "*"
+pyformat = "*"
+yapf = "*"
+bpython = "*"
+django-debug-toolbar = "*"
+django-silk = "*"
+coreapi = "*"
+markdown = "*"
+pygments = "*"
+pygraphviz = "*"
+xenon = "*"
+mypy = "*"
+
+
+[packages]
+
+celery = "*"
+flower = "*"
+django = "*"
+django-extensions = "*"
+django-filter = "*"
+djangorestframework = "*"
+raven = "*"
+django-redis = "*"
+django-environ = "*"
+django-requestlogging-redux = "*"
+whitenoise = "*"
+"psycopg2-binary" = "*"
+pytz = "*"
+"argon2-cffi" = "*"
+gunicorn = "*"
+django-model-utils = "*"
+djangorestframework-simplejwt = "*"
+
+
+[requires]
+
+python_version = "3.6"
