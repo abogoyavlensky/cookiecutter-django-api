@@ -185,8 +185,10 @@ AUTHENTICATION_BACKENDS = [
 # Custom user app defaults
 AUTH_USER_MODEL = 'users.User'
 # Simple JWT
-ACCESS_TOKEN_LIFETIME = timedelta(days=7)
-REFRESH_TOKEN_LIFETIME = timedelta(days=14)
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=7),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=14),
+}
 
 # CELERY
 # -----------------------------------------------------------------------------

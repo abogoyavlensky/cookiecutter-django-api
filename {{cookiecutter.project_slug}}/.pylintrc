@@ -1,4 +1,5 @@
 [MASTER]
+init-hook='import sys; sys.path.append("src/apps")'
 ignore=migrations,.git,tests
 disable=W0612,too-few-public-methods,too-many-ancestors,locally-disabled,locally-enabled,fixme,no-member,cyclic-import,no-self-use,invalid-name,old-style-class,no-init,duplicate-code,ungrouped-imports
 max-line-length=79
